@@ -774,15 +774,18 @@ class TestRestApiServer(unittest.TestCase):
 
     def test__construct_server_tokens(self):
         #
-        # Test cases (case insensitive values):
+        # Test cases (values are case insensitive):
         # 1. 'original' server token - should return empty string
         self.assertEqual(self.srv._RestApiServer__construct_server_tokens('original'), '')
+        self.assertEqual(self.srv._RestApiServer__construct_server_tokens('orIGInal'), '')
 
         # 2. 'productonly' server token - should return 'Patroni'
         self.assertEqual(self.srv._RestApiServer__construct_server_tokens('productonly'), 'Patroni')
+        self.assertEqual(self.srv._RestApiServer__construct_server_tokens('proDUCTonly'), 'Patroni')
 
         # 3. 'minimal' server token - should return 'Patroni/$version'
         self.assertEqual(self.srv._RestApiServer__construct_server_tokens('minimal'), 'Patroni/0.00')
+        self.assertEqual(self.srv._RestApiServer__construct_server_tokens('miNIMal'), 'Patroni/0.00')
 
         # 4. Invalid server token - should exhibit 'original' behaviour and return an empty string.
         self.assertEqual(self.srv._RestApiServer__construct_server_tokens('foobar'), '')
